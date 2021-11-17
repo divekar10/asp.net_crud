@@ -1,0 +1,70 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc;
+
+
+@model IPagedList<MvcCrud.Models.productMaster>
+
+@{
+    ViewData["Title"] = "ProductList";
+
+}
+
+<h1 class="display-4 text-md-center" >Product Details</h1>
+
+<p class="float-right">
+    <a asp-action="Create" class="btn btn-outline-primary">Add Product</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Actions</th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().productID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().productName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().catID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Category)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Create", new { productID = item.productID, item.productName, item.catID, item.Category }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.productID }, new { @class = "btn btn-danger", onclick = "return confirm('Do you really want to delete this product.')" })
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.productID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.catID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination">
+
+    @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }))
+
+</div>
+
+
